@@ -7,6 +7,7 @@ def print_friends_table(friend_list):
     page_number = 0
     str = "{:<20} {:<20} {:<20} {:<20} {:<10} {:<6}"
     while True:
+        print(f'Page {page_number + 1}')
         # Print the names of the columns.
         print(str.format('First Name', 'Last Name', 'Country', 'City', 'Birthday', 'Gender'))
 
@@ -36,18 +37,19 @@ def print_friends_table(friend_list):
             print('Written incorrect command.')
 
 
+__headers = ['first_name', 'last_name', 'country', 'city', 'bdate', 'sex']
+
+
 def to_csv(friend_list, path):
     with open(path, 'w') as file:
-        headers = ['first_name', 'last_name', 'country', 'city', 'bdate', 'sex']
-        writer = csv.DictWriter(file, fieldnames=headers)
+        writer = csv.DictWriter(file, fieldnames=__headers)
         writer.writeheader()
         writer.writerows(friend_list)
 
 
 def to_tsv(friend_list, path):
     with open(path, 'w') as file:
-        headers = ['first_name', 'last_name', 'country', 'city', 'bdate', 'sex']
-        writer = csv.DictWriter(file, fieldnames=headers, dialect='excel-tab')
+        writer = csv.DictWriter(file, fieldnames=__headers, dialect='excel-tab')
         writer.writeheader()
         writer.writerows(friend_list)
 

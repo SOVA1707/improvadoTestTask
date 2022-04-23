@@ -28,6 +28,12 @@ def __parse_friends(user_id, token):
             'v': __VK_API_VERSION
         }
         r = requests.post(url=__URL, data=params)
+
+        if 'error' in r.json():
+            print(r.json()['error']['error_msg'])
+            print('Exit program.')
+            quit()
+
         friends = r.json()['response']['items']
 
         friends_list = friends_list + friends
@@ -44,9 +50,13 @@ def __parse_friends(user_id, token):
 # Removes unnecessary fields and updates the required fields
 def __reformat_friend_info(friend):
     friend.pop('id')
-    friend.pop('can_access_closed')
-    friend.pop('is_closed')
     friend.pop('track_code')
+    try:
+        friend.pop('can_access_closed')
+        friend.pop('is_closed')
+        friend.pop('deactivated')
+    except KeyError:
+        pass
 
     try:
         friend['country'] = friend['country']['title']

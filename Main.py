@@ -1,5 +1,5 @@
 from vk.Friends import get_friends_info
-from io.Output import print_friends_table, to_csv, to_tsv, to_json
+from scenario.Output import print_friends_table, to_csv, to_tsv, to_json
 import sys
 
 
