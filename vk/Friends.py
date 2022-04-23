@@ -5,11 +5,7 @@ __URL = "https://api.vk.com/method/friends.get"
 
 
 def get_friends_info(user_id, token):
-    friends = __parse_friends(user_id, token)
-
-    for friend_info in friends:
-        __reformat_friend_info(friend_info)
-
+    friends = [__get_friend_info(item) for item in __parse_friends(user_id, token)]
     return sorted(friends, key=lambda item: item['first_name'])
 
 
@@ -48,25 +44,19 @@ def __parse_friends(user_id, token):
 
 
 # Removes unnecessary fields and updates the required fields
-def __reformat_friend_info(friend):
-    friend.pop('id')
-    friend.pop('track_code')
-    try:
-        friend.pop('can_access_closed')
-        friend.pop('is_closed')
-        friend.pop('deactivated')
-    except KeyError:
-        pass
+def __get_friend_info(friend):
+    new_friend = {'first_name': friend['first_name'],
+                  'last_name': friend['last_name']}
 
     try:
-        friend['country'] = friend['country']['title']
+        new_friend['country'] = friend['country']['title']
     except KeyError:
-        friend['country'] = 'undefined'
+        new_friend['country'] = 'undefined'
 
     try:
-        friend['city'] = friend['city']['title']
+        new_friend['city'] = friend['city']['title']
     except KeyError:
-        friend['city'] = 'undefined'
+        new_friend['city'] = 'undefined'
 
     try:
         dates = friend['bdate'].split('.')
@@ -77,5 +67,6 @@ def __reformat_friend_info(friend):
     except KeyError:
         date = 'XXXX-XX-XX'
 
-    friend['bdate'] = date
-    friend['sex'] = 'male' if friend['sex'] == 2 else 'female'
+    new_friend['bdate'] = date
+    new_friend['sex'] = 'male' if friend['sex'] == 2 else 'female'
+    return new_friend
