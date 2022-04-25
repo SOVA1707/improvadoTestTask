@@ -14,5 +14,5 @@
 
 Run command:
 
->python Main.py [vk_access_token] [user_id] [file extension] [file path]
+>python main.py [vk_access_token] [user_id] [file extension] [file path]
 
