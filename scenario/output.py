@@ -3,7 +3,7 @@ import json
 
 
 class OutputScripts:
-    __headers = ['first_name', 'last_name', 'country', 'city', 'bdate', 'sex']
+    __HEADERS = ['first_name', 'last_name', 'country', 'city', 'bdate', 'sex']
 
     def print_friends_table(self, friend_list):
         page_size = 15
@@ -36,13 +36,13 @@ class OutputScripts:
 
     def to_csv(self, friend_list, path):
         with open(path, 'w') as file:
-            writer = csv.DictWriter(file, fieldnames=self.__headers)
+            writer = csv.DictWriter(file, fieldnames=self.__HEADERS)
             writer.writeheader()
             writer.writerows(friend_list)
 
     def to_tsv(self, friend_list, path):
         with open(path, 'w') as file:
-            writer = csv.DictWriter(file, fieldnames=self.__headers, dialect='excel-tab')
+            writer = csv.DictWriter(file, fieldnames=self.__HEADERS, dialect='excel-tab')
             writer.writeheader()
             writer.writerows(friend_list)
 
