@@ -3,7 +3,7 @@ import json
 import unittest
 import os
 
-from scenario.Output import to_csv, to_tsv, to_json
+from scenario.output import OutputScripts
 
 
 class MyTestCase(unittest.TestCase):
@@ -16,14 +16,15 @@ class MyTestCase(unittest.TestCase):
                  'country': 'Russia'},
                 {'first_name': 'Name4', 'last_name': 'Sname4', 'sex': 'female', 'bdate': '1977-11-14', 'city': 'Tomsk',
                  'country': 'Russia'}]
+        out = OutputScripts()
 
         filename_csv = 'testfilename.csv'
         filename_tsv = 'testfilename.tsv'
         filename_json = 'testfilename.json'
 
-        to_csv(data, filename_csv)
-        to_tsv(data, filename_tsv)
-        to_json(data, filename_json)
+        out.to_csv(data, filename_csv)
+        out.to_tsv(data, filename_tsv)
+        out.to_json(data, filename_json)
 
         with open(filename_csv) as file:
             reader = csv.DictReader(file)
